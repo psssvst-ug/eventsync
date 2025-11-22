@@ -47,6 +47,8 @@ export default function PricingPage() {
             if (response.ok) {
                 const data = await response.json();
                 setPlans(data.data || []);
+            } else {
+                console.error("Error fetching pricing plans - database may not be migrated");
             }
         } catch (error) {
             console.error("Error fetching pricing plans:", error);
@@ -85,6 +87,38 @@ export default function PricingPage() {
         return (
             <div className="flex h-screen items-center justify-center">
                 <Loader2 className="h-8 w-8 animate-spin" />
+            </div>
+        );
+    }
+
+    if (plans.length === 0) {
+        return (
+            <div className="container mx-auto p-6">
+                <div className="mb-12 text-center">
+                    <h1 className="mb-4 text-4xl font-bold">Pricing Plans</h1>
+                </div>
+                <Card className="max-w-2xl mx-auto border-yellow-200 bg-yellow-50">
+                    <CardHeader>
+                        <CardTitle>Database Migration Required</CardTitle>
+                        <CardDescription>
+                            The pricing plans table hasn't been created yet.
+                        </CardDescription>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                        <p className="text-sm">
+                            To use the Organizations and Pricing features, you need to run the database migration:
+                        </p>
+                        <div className="bg-background p-4 rounded-md">
+                            <code className="text-sm">
+                                cd Kintsugi/eventsync-web/eventsync<br />
+                                psql $DATABASE_URL &lt; migrations/001_add_organizations.sql
+                            </code>
+                        </div>
+                        <p className="text-sm">
+                            For detailed instructions, see <code>Kintsugi/DATABASE_SETUP.md</code>
+                        </p>
+                    </CardContent>
+                </Card>
             </div>
         );
     }
