@@ -88,14 +88,30 @@ export default function EventsPage() {
                 params.append("search", searchQuery.trim());
             }
 
-            const response = await fetch(`/api/events/list?${params}`);
-            const data: ApiResponse = await response.json();
+            const response = await fetch(`/api/events-supabase/list?${params}`);
+            const data = await response.json();
+            
+            // Adapt Supabase response to expected format
+            const adaptedData: ApiResponse = {
+                success: response.ok,
+                data: {
+                    events: data.data?.events || [],
+                    pagination: data.data?.pagination || {
+                        page: 1,
+                        limit: 12,
+                        total: 0,
+                        totalPages: 1,
+                        hasMore: false
+                    }
+                },
+                message: data.message || ''
+            };
 
-            if (data.success) {
-                setEvents(data.data.events);
-                setTotalPages(data.data.pagination.totalPages);
+            if (adaptedData.success) {
+                setEvents(adaptedData.data.events);
+                setTotalPages(adaptedData.data.pagination.totalPages);
             } else {
-                setError(data.message || "Failed to fetch events");
+                setError(adaptedData.message || "Failed to fetch events");
             }
         } catch (err) {
             setError("An error occurred while fetching events");
