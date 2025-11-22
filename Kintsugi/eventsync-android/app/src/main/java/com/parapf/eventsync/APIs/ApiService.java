@@ -5,6 +5,7 @@ import com.parapf.eventsync.APIs.Requests.SignUpRequest;
 import com.parapf.eventsync.APIs.Responses.EventResponse;
 import com.parapf.eventsync.APIs.Responses.EventsListResponse;
 import com.parapf.eventsync.APIs.Responses.MyEventsResponse;
+import com.parapf.eventsync.APIs.Responses.OrganizationsResponse;
 import com.parapf.eventsync.APIs.Responses.SessionResponse;
 import com.parapf.eventsync.APIs.Responses.SignInResponse;
 import com.parapf.eventsync.APIs.Responses.SignUpResponse;
@@ -55,10 +56,15 @@ public interface ApiService {
 
     @GET("api/manager/events")
     Call<MyEventsResponse> getMyEvents(@Header("Cookie") String cookieHeader);
+    
     @GET("api/user/registrations")
     Call<UserRegistrationsResponse> getUserRegistrations(@Header("Cookie") String cookieHeader);
 
 
     @GET("api/user")
     Call<UserResponse> getCurrentUser(@Header("Cookie") String cookieHeader);
+    
+    // Organization endpoints
+    @GET("api/organizations")
+    Call<OrganizationsResponse> getOrganizations(@Header("Cookie") String cookieHeader);
 }
