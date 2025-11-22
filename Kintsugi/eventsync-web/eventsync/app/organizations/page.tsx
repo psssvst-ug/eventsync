@@ -57,7 +57,7 @@ export default function OrganizationsPage() {
     const fetchOrganizations = async () => {
         try {
             setLoading(true);
-            const response = await fetch("/api/organizations");
+            const response = await fetch("/api/orgs-supabase");
             if (response.ok) {
                 const data = await response.json();
                 setOrganizations(data.data || []);

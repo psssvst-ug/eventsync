@@ -43,7 +43,7 @@ export default function PricingPage() {
     const fetchPricingPlans = async () => {
         try {
             setLoading(true);
-            const response = await fetch("/api/pricing");
+            const response = await fetch("/api/pricing-supabase");
             if (response.ok) {
                 const data = await response.json();
                 setPlans(data.data || []);

@@ -75,7 +75,7 @@ export default function CreateOrganizationPage() {
 
     const fetchPricingPlans = async () => {
         try {
-            const response = await fetch("/api/pricing");
+            const response = await fetch("/api/pricing-supabase");
             if (response.ok) {
                 const data = await response.json();
                 setPricingPlans(data.data || []);
@@ -96,7 +96,7 @@ export default function CreateOrganizationPage() {
         setLoading(true);
 
         try {
-            const response = await fetch("/api/organizations", {
+            const response = await fetch("/api/orgs-supabase", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

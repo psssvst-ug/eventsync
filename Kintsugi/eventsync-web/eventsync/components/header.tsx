@@ -23,7 +23,7 @@ export function Header() {
         if (user) {
             router.push("/dashboard");
         } else {
-            router.push("/auth");
+            router.push("/auth/signin");
         }
     };
 
