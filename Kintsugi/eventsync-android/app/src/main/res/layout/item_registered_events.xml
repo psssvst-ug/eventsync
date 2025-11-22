@@ -1,0 +1,112 @@
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cardView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="5dp"
+    android:layout_marginTop="10dp"
+    android:layout_marginRight="5dp"
+    android:gravity="center_vertical"
+    app:strokeColor="@android:color/darker_gray">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="20dp">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:fontFamily="@font/outfit_semibold"
+            android:text="Title"
+            android:textColor="@color/text_color_primary"
+            android:textSize="28sp"
+            app:layout_constraintEnd_toStartOf="@+id/statusChip"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- Status Chip -->
+        <com.google.android.material.chip.Chip
+            android:id="@+id/statusChip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="CONFIRMED"
+            android:textSize="10sp"
+            android:visibility="gone"
+            app:chipBackgroundColor="@color/light_primary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- Team Badge (Optional) -->
+        <com.google.android.material.chip.Chip
+            android:id="@+id/teamChip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Team Name"
+            android:textSize="10sp"
+            android:visibility="gone"
+            app:chipBackgroundColor="@color/md_secondary"
+            app:chipIcon="@drawable/baseline_people_outline_24"
+            app:chipIconTint="@color/white"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title" />
+
+        <TextView
+            android:id="@+id/desc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/outfit_light"
+            android:text="desc\ndesc"
+            android:textColor="@color/text_color_primary"
+            app:layout_constraintTop_toBottomOf="@+id/teamChip" />
+
+        <TextView
+            android:id="@+id/timeline"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:drawablePadding="5dp"
+            android:drawableStart="@drawable/baseline_access_time_24"
+            android:drawableTint="@color/text_color_primary"
+            android:fontFamily="@font/outfit_regular"
+            android:gravity="center_vertical"
+            android:padding="2dp"
+            android:text="Timeline"
+            android:textColor="@color/text_color_primary"
+            app:layout_constraintTop_toBottomOf="@+id/desc" />
+
+        <TextView
+            android:id="@+id/venue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:drawablePadding="5dp"
+            android:drawableStart="@drawable/baseline_place_24"
+            android:drawableTint="@color/text_color_primary"
+            android:fontFamily="@font/outfit_regular"
+            android:gravity="center_vertical"
+            android:text="Venue"
+            android:textColor="@color/text_color_primary"
+            app:layout_constraintTop_toBottomOf="@+id/timeline" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/learnMore"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:backgroundTint="@color/light_primary"
+            android:drawableTint="@color/white"
+            android:drawableEnd="@drawable/baseline_chevron_right_24"
+            android:fontFamily="@font/outfit_regular"
+            android:text="View Details"
+            android:textColor="@color/white"
+            android:theme="@style/Widget.Material3.Button"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/venue" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>

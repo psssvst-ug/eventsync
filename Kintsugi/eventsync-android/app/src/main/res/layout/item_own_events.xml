@@ -1,0 +1,96 @@
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/cardView"
+    android:layout_marginTop="10dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
+    app:strokeColor="@android:color/darker_gray"
+    android:gravity="center_vertical">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="20dp">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:textColor="@color/text_color_primary"
+            android:text="Title"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/statusBadge"
+            android:fontFamily="@font/outfit_semibold"
+            android:textSize="28sp"/>
+
+        <!-- Optional: Status Badge -->
+        <com.google.android.material.chip.Chip
+            android:id="@+id/statusBadge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Published"
+            android:textSize="10sp"
+            android:visibility="gone"
+            app:chipBackgroundColor="@color/light_primary"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <TextView
+            android:id="@+id/desc"
+            app:layout_constraintTop_toBottomOf="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:textColor="@color/text_color_primary"
+            android:text="desc\ndesc"
+            android:fontFamily="@font/outfit_light"/>
+
+        <TextView
+            android:id="@+id/timeline"
+            app:layout_constraintTop_toBottomOf="@+id/desc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/text_color_primary"
+            android:padding="2dp"
+            android:text="Timeline"
+            android:drawableStart="@drawable/baseline_access_time_24"
+            android:drawableTint="@color/text_color_primary"
+            android:drawablePadding="5dp"
+            android:fontFamily="@font/outfit_regular"/>
+
+        <TextView
+            android:id="@+id/venue"
+            app:layout_constraintTop_toBottomOf="@+id/timeline"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:gravity="center_vertical"
+            android:drawablePadding="5dp"
+            android:drawableStart="@drawable/baseline_place_24"
+            android:textColor="@color/text_color_primary"
+            android:drawableTint="@color/text_color_primary"
+            android:text="Venue"
+            android:fontFamily="@font/outfit_regular"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/attendance"
+            android:layout_width="match_parent"
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/outfit_regular"
+            android:layout_marginTop="5dp"
+            android:text="Take Attendance"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/venue" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>

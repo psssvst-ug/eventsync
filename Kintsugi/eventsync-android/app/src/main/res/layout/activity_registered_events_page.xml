@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RegisteredEventsPage">
+
+    <!-- Top Bar -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/topBar"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:background="@color/light_primary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/finit"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:padding="16dp"
+            android:paddingStart="14dp"
+            android:src="@drawable/baseline_arrow_back_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/white" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/outfit_regular"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="My Registrations"
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/finit"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- Back Navigation (Alternative - if you prefer this style) -->
+    <TextView
+        android:id="@+id/finish"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:drawablePadding="5dp"
+        android:drawableStart="@drawable/baseline_arrow_back_24"
+        android:drawableTint="@color/light_primary"
+        android:fontFamily="@font/outfit_regular"
+        android:gravity="center_vertical"
+        android:text="Go Back to Home"
+        android:textColor="@color/light_primary"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@+id/topBar" />
+
+    <!-- RecyclerView for Registrations -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/registrationsRecycler"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:padding="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/topBar"
+        tools:listitem="@layout/item_registered_events" />
+
+    <!-- Loading Indicator -->
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:id="@+id/loadingBar"
+        style="@style/Widget.Material3.CircularProgressIndicator.Small"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:progressTint="@color/light_primary"
+        app:indicatorColor="@color/light_primary"
+        app:layout_constraintBottom_toBottomOf="@+id/registrationsRecycler"
+        app:layout_constraintEnd_toEndOf="@+id/registrationsRecycler"
+        app:layout_constraintStart_toStartOf="@id/registrationsRecycler"
+        app:layout_constraintTop_toTopOf="@+id/registrationsRecycler"
+        app:trackColor="#633B82F6" />
+
+    <!-- Empty State -->
+    <TextView
+        android:id="@+id/empty_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/outfit_semibold"
+        android:gravity="center"
+        android:padding="30dp"
+        android:text="No registrations found :)"
+        android:textSize="24sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

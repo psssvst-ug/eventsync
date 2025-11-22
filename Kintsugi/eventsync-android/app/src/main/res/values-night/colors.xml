@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Primary -->
+    <color name="md_primary_dark">#3B82F6</color>
+    <color name="md_on_primary_dark">#FFFFFF</color>
+
+    <!-- Secondary -->
+    <color name="md_secondary_dark">#262626</color>
+    <color name="md_on_secondary_dark">#E5E5E5</color>
+
+    <color name="text_color_primary">#fff</color>
+
+    <!-- Tertiary (using accent) -->
+    <color name="md_tertiary_dark">#1E3A8A</color>
+    <color name="md_on_tertiary_dark">#BFDBFE</color>
+
+    <!-- Background / Surface -->
+    <color name="md_background_dark">#171717</color>
+    <color name="md_on_background_dark">#E5E5E5</color>
+
+    <color name="md_surface_dark">#262626</color>
+    <color name="md_on_surface_dark">#E5E5E5</color>
+
+    <!-- Surface Variant -->
+    <color name="md_surface_variant_dark">#1F1F1F</color>
+    <color name="md_on_surface_variant_dark">#A3A3A3</color>
+
+    <!-- Outline -->
+    <color name="md_outline_dark">#404040</color>
+
+    <!-- Error -->
+    <color name="md_error_dark">#EF4444</color>
+    <color name="md_on_error_dark">#FFFFFF</color>
+
+    <!-- Inverse -->
+    <color name="md_inverse_surface_dark">#E5E5E5</color>
+    <color name="md_inverse_on_surface_dark">#171717</color>
+
+    <color name="md_inverse_primary_dark">#60A5FA</color>
+    <color name="inverted_text_color_primary">#000</color>
+
+    <color name="outline_btn_bg">#262626</color>
+
+    <color name="light_background">#2C2C2C</color>
+
+    <color name="gray_outline">#404040</color>
+    <!-- a lighter version of primary for dark themes -->
+
+</resources>
