@@ -48,6 +48,26 @@ export function Header() {
                                 Events
                             </Button>
                         </Link>
+                        <Link href="/pricing">
+                            <Button
+                                variant="ghost"
+                                size="sm"
+                                className="text-sm font-medium"
+                            >
+                                Pricing
+                            </Button>
+                        </Link>
+                        {(user?.role === "manager" || user?.role === "admin") && (
+                            <Link href="/organizations">
+                                <Button
+                                    variant="ghost"
+                                    size="sm"
+                                    className="text-sm font-medium"
+                                >
+                                    Organizations
+                                </Button>
+                            </Link>
+                        )}
                         <Link href="/about">
                             <Button
                                 variant="ghost"
