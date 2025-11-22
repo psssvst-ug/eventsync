@@ -1,8 +1,30 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db, schema } from "@/db";
-import { eq } from "drizzle-orm";
+import { eq, and } from "drizzle-orm";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
+
+// Helper function to check if user can manage event through organization
+async function canManageEventByOrganization(
+    userId: string,
+    organizationId: string
+): Promise<boolean> {
+    const [membership] = await db
+        .select()
+        .from(schema.organizationMember)
+        .where(
+            and(
+                eq(schema.organizationMember.organizationId, organizationId),
+                eq(schema.organizationMember.userId, userId),
+                eq(schema.organizationMember.status, "active")
+            )
+        )
+        .limit(1);
+
+    return (
+        membership && (membership.role === "admin" || membership.role === "manager")
+    );
+}
 
 /**
  * GET /api/events/[id]
@@ -213,13 +235,22 @@ export async function PATCH(
 
         const existingEvent = existingEvents[0];
 
-        // Check if user is the manager of this event (admins can edit any event)
-        if (role !== "admin" && existingEvent.managerId !== user.id) {
+        // Check if user can manage this event (using organization permissions)
+        const canManage =
+            role === "admin" ||
+            existingEvent.managerId === user.id ||
+            (await canManageEventByOrganization(
+                user.id,
+                existingEvent.organizationId
+            ));
+
+        if (!canManage) {
             return NextResponse.json(
                 {
                     success: false,
                     data: null,
-                    message: "Forbidden: You can only edit your own events",
+                    message:
+                        "Forbidden: You can only edit events in your organization",
                 },
                 { status: 403 },
             );
@@ -356,13 +387,22 @@ export async function DELETE(
 
         const existingEvent = existingEvents[0];
 
-        // Check if user is the manager of this event (admins can delete any event)
-        if (role !== "admin" && existingEvent.managerId !== user.id) {
+        // Check if user can manage this event (using organization permissions)
+        const canManage =
+            role === "admin" ||
+            existingEvent.managerId === user.id ||
+            (await canManageEventByOrganization(
+                user.id,
+                existingEvent.organizationId
+            ));
+
+        if (!canManage) {
             return NextResponse.json(
                 {
                     success: false,
                     data: null,
-                    message: "Forbidden: You can only delete your own events",
+                    message:
+                        "Forbidden: You can only delete events in your organization",
                 },
                 { status: 403 },
             );
