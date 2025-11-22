@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { db, schema } from "@/db";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
-import { eq, and } from "drizzle-orm";
+import { eq, and, gte, lte } from "drizzle-orm";
 
 export async function POST(request: NextRequest) {
     try {
@@ -127,7 +127,7 @@ export async function POST(request: NextRequest) {
         if (organization.pricingPlan && organization.pricingPlan.maxEvents > 0) {
             const now = new Date();
             const firstDayOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
-            const lastDayOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+            const lastDayOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59);
 
             const eventsThisMonth = await db
                 .select()
@@ -135,8 +135,8 @@ export async function POST(request: NextRequest) {
                 .where(
                     and(
                         eq(schema.event.organizationId, organizationId),
-                        // Events created this month
-                        // Using a simple date comparison - in production you'd want better handling
+                        gte(schema.event.createdAt, firstDayOfMonth.toISOString()),
+                        lte(schema.event.createdAt, lastDayOfMonth.toISOString())
                     )
                 );
 

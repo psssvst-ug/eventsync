@@ -1,5 +1,6 @@
 import "dotenv/config";
 import { db, schema } from "../db";
+import { eq } from "drizzle-orm";
 
 async function seedPricingPlans() {
     console.log("Seeding pricing plans...");
@@ -97,7 +98,7 @@ async function seedPricingPlans() {
             const [existing] = await db
                 .select()
                 .from(schema.pricingPlan)
-                .where((table: any) => table.name === plan.name)
+                .where(eq(schema.pricingPlan.name, plan.name))
                 .limit(1);
 
             if (existing) {
@@ -105,7 +106,7 @@ async function seedPricingPlans() {
             } else {
                 await db.insert(schema.pricingPlan).values({
                     ...plan,
-                    features: plan.features as any,
+                    features: plan.features,
                 });
                 console.log(`Created plan: ${plan.displayName}`);
             }

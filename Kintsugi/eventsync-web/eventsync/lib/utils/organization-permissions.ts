@@ -81,7 +81,12 @@ export async function canManageEvent(
         return true;
     }
 
-    // Check organization permissions
+    // Check organization permissions if event has an organization
+    if (!event.organizationId) {
+        // Event without organization can only be managed by creator or system admin
+        return false;
+    }
+
     const permissions = await checkOrganizationPermission(
         userId,
         event.organizationId
