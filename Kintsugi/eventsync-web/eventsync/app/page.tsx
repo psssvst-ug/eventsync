@@ -7,6 +7,10 @@ import {
     Zap,
     ArrowRight,
     CheckCircle2,
+    Building2,
+    CreditCard,
+    Shield,
+    TrendingUp,
 } from "lucide-react";
 
 export default function Home() {
@@ -50,20 +54,28 @@ export default function Home() {
                                     <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                                 </Button>
                             </Link>
-                            <Link href="/events">
+                            <Link href="/pricing">
                                 <Button
                                     size="lg"
                                     variant="outline"
                                     className="gap-2"
                                 >
-                                    <Calendar className="w-4 h-4" />
-                                    Browse Events
+                                    <CreditCard className="w-4 h-4" />
+                                    View Pricing
                                 </Button>
                             </Link>
                         </div>
 
                         {/* Stats */}
-                        <div className="grid grid-cols-3 gap-8 pt-12 max-w-2xl mx-auto">
+                        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 pt-12 max-w-3xl mx-auto">
+                            <div className="space-y-1">
+                                <div className="text-3xl md:text-4xl font-bold text-foreground">
+                                    500+
+                                </div>
+                                <div className="text-sm text-muted-foreground">
+                                    Organizations
+                                </div>
+                            </div>
                             <div className="space-y-1">
                                 <div className="text-3xl md:text-4xl font-bold text-foreground">
                                     10K+
@@ -74,18 +86,18 @@ export default function Home() {
                             </div>
                             <div className="space-y-1">
                                 <div className="text-3xl md:text-4xl font-bold text-foreground">
-                                    5K+
+                                    50K+
                                 </div>
                                 <div className="text-sm text-muted-foreground">
-                                    Active Users
+                                    Registrations
                                 </div>
                             </div>
                             <div className="space-y-1">
                                 <div className="text-3xl md:text-4xl font-bold text-foreground">
-                                    98%
+                                    99.9%
                                 </div>
                                 <div className="text-sm text-muted-foreground">
-                                    Satisfaction
+                                    Uptime
                                 </div>
                             </div>
                         </div>
@@ -113,18 +125,43 @@ export default function Home() {
                             {/* Feature 1 */}
                             <div className="group p-6 rounded-xl border bg-background hover:shadow-lg transition-all">
                                 <div className="flex items-center justify-center w-12 h-12 rounded-lg bg-primary/10 mb-4">
-                                    <Calendar className="w-6 h-6 text-primary" />
+                                    <Building2 className="w-6 h-6 text-primary" />
                                 </div>
                                 <h3 className="text-xl font-semibold mb-2">
-                                    Smart Scheduling
+                                    Multi-Tenant Organizations
                                 </h3>
                                 <p className="text-muted-foreground">
-                                    Intelligent event scheduling with conflict
-                                    detection and automatic reminders.
+                                    Create and manage multiple organizations with role-based access control for admins and managers.
                                 </p>
                             </div>
 
                             {/* Feature 2 */}
+                            <div className="group p-6 rounded-xl border bg-background hover:shadow-lg transition-all">
+                                <div className="flex items-center justify-center w-12 h-12 rounded-lg bg-primary/10 mb-4">
+                                    <CreditCard className="w-6 h-6 text-primary" />
+                                </div>
+                                <h3 className="text-xl font-semibold mb-2">
+                                    Flexible Pricing Plans
+                                </h3>
+                                <p className="text-muted-foreground">
+                                    Choose from 4 pricing tiers with different limits. Start with a 14-day free trial on any plan.
+                                </p>
+                            </div>
+
+                            {/* Feature 3 */}
+                            <div className="group p-6 rounded-xl border bg-background hover:shadow-lg transition-all">
+                                <div className="flex items-center justify-center w-12 h-12 rounded-lg bg-primary/10 mb-4">
+                                    <Calendar className="w-6 h-6 text-primary" />
+                                </div>
+                                <h3 className="text-xl font-semibold mb-2">
+                                    Smart Event Management
+                                </h3>
+                                <p className="text-muted-foreground">
+                                    Create events with registration tracking, QR code check-ins, and automated capacity limits.
+                                </p>
+                            </div>
+
+                            {/* Feature 4 */}
                             <div className="group p-6 rounded-xl border bg-background hover:shadow-lg transition-all">
                                 <div className="flex items-center justify-center w-12 h-12 rounded-lg bg-primary/10 mb-4">
                                     <Users className="w-6 h-6 text-primary" />
@@ -133,64 +170,33 @@ export default function Home() {
                                     Team Collaboration
                                 </h3>
                                 <p className="text-muted-foreground">
-                                    Share events with your team and manage
-                                    attendees with ease.
-                                </p>
-                            </div>
-
-                            {/* Feature 3 */}
-                            <div className="group p-6 rounded-xl border bg-background hover:shadow-lg transition-all">
-                                <div className="flex items-center justify-center w-12 h-12 rounded-lg bg-primary/10 mb-4">
-                                    <Bell className="w-6 h-6 text-primary" />
-                                </div>
-                                <h3 className="text-xl font-semibold mb-2">
-                                    Real-time Notifications
-                                </h3>
-                                <p className="text-muted-foreground">
-                                    Get instant updates about event changes and
-                                    upcoming schedules.
-                                </p>
-                            </div>
-
-                            {/* Feature 4 */}
-                            <div className="group p-6 rounded-xl border bg-background hover:shadow-lg transition-all">
-                                <div className="flex items-center justify-center w-12 h-12 rounded-lg bg-primary/10 mb-4">
-                                    <Zap className="w-6 h-6 text-primary" />
-                                </div>
-                                <h3 className="text-xl font-semibold mb-2">
-                                    Quick Actions
-                                </h3>
-                                <p className="text-muted-foreground">
-                                    Create and manage events with lightning-fast
-                                    keyboard shortcuts.
+                                    Create teams, manage members, and collaborate on events with your entire organization.
                                 </p>
                             </div>
 
                             {/* Feature 5 */}
                             <div className="group p-6 rounded-xl border bg-background hover:shadow-lg transition-all">
                                 <div className="flex items-center justify-center w-12 h-12 rounded-lg bg-primary/10 mb-4">
-                                    <CheckCircle2 className="w-6 h-6 text-primary" />
+                                    <Shield className="w-6 h-6 text-primary" />
                                 </div>
                                 <h3 className="text-xl font-semibold mb-2">
-                                    Task Management
+                                    Row-Level Security
                                 </h3>
                                 <p className="text-muted-foreground">
-                                    Organize tasks and to-dos alongside your
-                                    event schedule.
+                                    Database-level security policies ensure data privacy and proper access control for all users.
                                 </p>
                             </div>
 
                             {/* Feature 6 */}
                             <div className="group p-6 rounded-xl border bg-background hover:shadow-lg transition-all">
                                 <div className="flex items-center justify-center w-12 h-12 rounded-lg bg-primary/10 mb-4">
-                                    <Calendar className="w-6 h-6 text-primary" />
+                                    <TrendingUp className="w-6 h-6 text-primary" />
                                 </div>
                                 <h3 className="text-xl font-semibold mb-2">
-                                    Calendar Sync
+                                    Real-Time Analytics
                                 </h3>
                                 <p className="text-muted-foreground">
-                                    Seamlessly integrate with Google Calendar,
-                                    Outlook, and more.
+                                    Track event performance, registration trends, and attendee engagement in real-time.
                                 </p>
                             </div>
                         </div>
@@ -216,9 +222,9 @@ export default function Home() {
                                     <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                                 </Button>
                             </Link>
-                            <Link href="/contact">
+                            <Link href="/pricing">
                                 <Button size="lg" variant="outline">
-                                    Contact Sales
+                                    View Pricing Plans
                                 </Button>
                             </Link>
                         </div>
