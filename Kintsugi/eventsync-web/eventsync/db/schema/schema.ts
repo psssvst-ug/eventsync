@@ -140,6 +140,9 @@ export const event = pgTable("event", {
     id: uuid("id").primaryKey().defaultRandom(),
     title: text("title").notNull(),
     description: text("description"),
+    organizationId: uuid("organization_id")
+        .notNull()
+        .references(() => organization.id, { onDelete: "cascade" }),
     teamId: uuid("team_id").references(() => team.id, { onDelete: "cascade" }),
     managerId: text("manager_id")
         .notNull()
@@ -153,6 +156,8 @@ export const event = pgTable("event", {
     registrationDeadline: timestamp("registration_deadline", {
         mode: "string",
     }),
+    registrationFee: decimal("registration_fee", { precision: 10, scale: 2 }).default("0"),
+    currency: text("currency").default("USD"),
     status: text("status").default("draft").notNull(),
     imageUrl: text("image_url"),
     page: jsonb("page"),
@@ -275,6 +280,7 @@ export const userRelations = relations(user, ({ many }) => ({
     managerApplications: many(managerApplications),
     teamsCreated: many(team),
     teamMemberships: many(teamMember),
+    organizationMemberships: many(organizationMember),
 }));
 
 export const teamRelations = relations(team, ({ one, many }) => ({
@@ -298,6 +304,10 @@ export const teamMemberRelations = relations(teamMember, ({ one }) => ({
 }));
 
 export const eventRelations = relations(event, ({ one, many }) => ({
+    organization: one(organization, {
+        fields: [event.organizationId],
+        references: [organization.id],
+    }),
     manager: one(user, {
         fields: [event.managerId],
         references: [user.id],
@@ -405,3 +415,160 @@ export const attendanceTrackingRelations = relations(
         }),
     }),
 );
+
+// ============================================================================
+// Organizations & Pricing System
+// ============================================================================
+
+export const pricingPlan = pgTable("pricing_plan", {
+    id: uuid("id").primaryKey().defaultRandom(),
+    name: text("name").notNull(), // e.g., "Free", "Starter", "Professional", "Enterprise"
+    displayName: text("display_name").notNull(),
+    description: text("description"),
+    price: decimal("price", { precision: 10, scale: 2 }).notNull(), // Monthly price
+    currency: text("currency").default("USD").notNull(),
+    maxEvents: integer("max_events").default(1), // Max events per month, -1 for unlimited
+    maxEventManagers: integer("max_event_managers").default(1), // Max managers in organization
+    maxAttendeesPerEvent: integer("max_attendees_per_event").default(50),
+    features: jsonb("features"), // Array of feature strings
+    isActive: boolean("is_active").default(true).notNull(),
+    sortOrder: integer("sort_order").default(0), // For display ordering
+    createdAt: timestamp("created_at", { mode: "string" })
+        .defaultNow()
+        .notNull(),
+    updatedAt: timestamp("updated_at", { mode: "string" })
+        .defaultNow()
+        .notNull(),
+});
+
+export const organization = pgTable("organization", {
+    id: uuid("id").primaryKey().defaultRandom(),
+    name: text("name").notNull(),
+    description: text("description"),
+    type: text("type").notNull(), // "educational", "corporate", "nonprofit", "other"
+    website: text("website"),
+    logo: text("logo"),
+    contactEmail: text("contact_email").notNull(),
+    contactPhone: text("contact_phone"),
+    address: text("address"),
+    pricingPlanId: uuid("pricing_plan_id")
+        .notNull()
+        .references(() => pricingPlan.id, { onDelete: "restrict" }),
+    subscriptionStatus: text("subscription_status")
+        .default("trial")
+        .notNull(), // "trial", "active", "suspended", "cancelled"
+    subscriptionStartDate: timestamp("subscription_start_date", {
+        mode: "string",
+    }),
+    subscriptionEndDate: timestamp("subscription_end_date", { mode: "string" }),
+    trialEndsAt: timestamp("trial_ends_at", { mode: "string" }),
+    isActive: boolean("is_active").default(true).notNull(),
+    createdAt: timestamp("created_at", { mode: "string" })
+        .defaultNow()
+        .notNull(),
+    updatedAt: timestamp("updated_at", { mode: "string" })
+        .defaultNow()
+        .notNull(),
+});
+
+export const organizationMember = pgTable(
+    "organization_member",
+    {
+        id: uuid("id").primaryKey().defaultRandom(),
+        organizationId: uuid("organization_id")
+            .notNull()
+            .references(() => organization.id, { onDelete: "cascade" }),
+        userId: text("user_id")
+            .notNull()
+            .references(() => user.id, { onDelete: "cascade" }),
+        role: text("role").notNull(), // "admin", "manager"
+        invitedBy: text("invited_by").references(() => user.id, {
+            onDelete: "set null",
+        }),
+        status: text("status").default("active").notNull(), // "active", "inactive", "invited"
+        joinedAt: timestamp("joined_at", { mode: "string" }).defaultNow(),
+        createdAt: timestamp("created_at", { mode: "string" })
+            .defaultNow()
+            .notNull(),
+        updatedAt: timestamp("updated_at", { mode: "string" })
+            .defaultNow()
+            .notNull(),
+    },
+    (table) => [
+        unique("organization_member_org_user_unique").on(
+            table.organizationId,
+            table.userId,
+        ),
+    ],
+);
+
+export const subscription = pgTable("subscription", {
+    id: uuid("id").primaryKey().defaultRandom(),
+    organizationId: uuid("organization_id")
+        .notNull()
+        .references(() => organization.id, { onDelete: "cascade" }),
+    pricingPlanId: uuid("pricing_plan_id")
+        .notNull()
+        .references(() => pricingPlan.id, { onDelete: "restrict" }),
+    status: text("status").default("active").notNull(), // "active", "cancelled", "expired"
+    startDate: timestamp("start_date", { mode: "string" }).notNull(),
+    endDate: timestamp("end_date", { mode: "string" }),
+    autoRenew: boolean("auto_renew").default(true).notNull(),
+    paymentMethod: text("payment_method"),
+    lastPaymentDate: timestamp("last_payment_date", { mode: "string" }),
+    nextPaymentDate: timestamp("next_payment_date", { mode: "string" }),
+    createdAt: timestamp("created_at", { mode: "string" })
+        .defaultNow()
+        .notNull(),
+    updatedAt: timestamp("updated_at", { mode: "string" })
+        .defaultNow()
+        .notNull(),
+});
+
+// Relations for new tables
+export const pricingPlanRelations = relations(pricingPlan, ({ many }) => ({
+    organizations: many(organization),
+    subscriptions: many(subscription),
+}));
+
+export const organizationRelations = relations(
+    organization,
+    ({ one, many }) => ({
+        pricingPlan: one(pricingPlan, {
+            fields: [organization.pricingPlanId],
+            references: [pricingPlan.id],
+        }),
+        members: many(organizationMember),
+        events: many(event),
+        subscriptions: many(subscription),
+    }),
+);
+
+export const organizationMemberRelations = relations(
+    organizationMember,
+    ({ one }) => ({
+        organization: one(organization, {
+            fields: [organizationMember.organizationId],
+            references: [organization.id],
+        }),
+        user: one(user, {
+            fields: [organizationMember.userId],
+            references: [user.id],
+        }),
+        inviter: one(user, {
+            fields: [organizationMember.invitedBy],
+            references: [user.id],
+        }),
+    }),
+);
+
+export const subscriptionRelations = relations(subscription, ({ one }) => ({
+    organization: one(organization, {
+        fields: [subscription.organizationId],
+        references: [organization.id],
+    }),
+    pricingPlan: one(pricingPlan, {
+        fields: [subscription.pricingPlanId],
+        references: [pricingPlan.id],
+    }),
+}));
